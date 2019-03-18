@@ -62,7 +62,7 @@ class ValidationMiddleware {
   static updateTask (req, res, next){
     const schema = {
       body: {
-        name: Joi.string().required(),
+        name: Joi.string(),
         description: Joi.string(),
         status: Joi.string(),
         parentId: Joi.number().integer().min(0)
