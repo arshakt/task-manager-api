@@ -7,6 +7,16 @@ class TaskController {
     const {userId} = req;
 
     try {
+      if(parentId){
+        const parentTask = await Task.findOne({
+          where: {id, parentId},
+          attributes: ['id']
+        });
+
+        if(!parentTask){
+          throw new NotFoundError(`Parent task with id ${parentId} is not found.`)
+        }
+      }
       const task = await Task.create({name, description, status, userId, parentId});
 
       res.send({data: task});
@@ -79,6 +89,16 @@ class TaskController {
     const {name, description, status, parentId} = req.body;
 
     try {
+      if(parentId){
+        const parentTask = await Task.findOne({
+          where: {id, parentId},
+          attributes: ['id']
+        });
+
+        if(!parentTask){
+          throw new NotFoundError(`Parent task with id ${parentId} is not found.`)
+        }
+      }
       const task = await Task.findOne({
         where: {id, userId},
         attributes: ['id', 'name', 'description', 'status', 'parentId']

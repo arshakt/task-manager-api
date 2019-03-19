@@ -11,7 +11,7 @@ class UserController {
       const passwordHash = await bcrypt.hash(password, 10);
       const user = await User.create({firstName, lastName, email, password: passwordHash});
 
-      res.send({data: user.id});
+      res.send({data:  {userId: user.id } });
     } catch (error) {
       return next(error);
     }
@@ -41,7 +41,7 @@ class UserController {
 
       await User.update({token}, {where: {email: email}});
 
-      res.send({data: token});
+      res.send({data:  {token} });
 
     } catch (error) {
       return next(error)
